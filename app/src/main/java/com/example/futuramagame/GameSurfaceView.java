@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
@@ -142,18 +141,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         return true;
     }
 
-/*
-    public void dispararNau(float posX, float posY){
-        paquet = new Paquet(posX, posY);
-        int mov = 10;
-        for (int i= 0; i < getHeight()/2+700; i++){
-            paquet.setY(paquet.getY()+mov);
-            System.out.println("disparant a tope" + i +" fins "+ getHeight()/2+700);
-        }
-        disparar = false;
-        System.out.println("ACABA EL DISPAR");
-    }
-*/
 
     private boolean anant;
     public boolean movimentNau(){
@@ -172,6 +159,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
         return anant;
     }
+
     private class MyAnimationThread extends Thread {
         private SurfaceHolder surfaceHolder;
         public boolean stop = false;
