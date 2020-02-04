@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.futuramagame.MainActivity">
+    <item
+        android:id="@+id/inici"
+        android:orderInCategory="100"
+        android:title="Inici"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/nau"
+        android:orderInCategory="100"
+        android:title="Nau"
+        app:showAsAction="never" />
+</menu>
