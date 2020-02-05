@@ -89,6 +89,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private Paint text = new Paint();
     private int punts = 0;
+    private int fallades = 0;
     private boolean caiguent = false;
     public void newDraw(Canvas canvas){
 
@@ -129,20 +130,28 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             paquet.setX(-1);
             paquet.setY(-1);
         }
+        if(paquet.getY() > getHeight()){
+            paquet.setX(-1);
+            paquet.setY(-1);
+            fallades++;
+        }
 
         text.setTextSize(50);
         text.setColor(Color.WHITE);
         text.setStyle(Paint.Style.FILL);
         if(punts < 100){
             canvas.drawText("Puntuació: "+punts, 50, getHeight()-50, text);
+            canvas.drawText("Fallades: "+fallades, 50, getHeight()-100, text);
         }else{
             text.setTextSize(120);
             canvas.drawText("YOU WIN!", getWidth()/3, getHeight()/2, text);
             stopThread();
         }
-
-
-
+        if(fallades == 3){
+            text.setTextSize(120);
+            canvas.drawText("YOU LOSE!", getWidth()/3, getHeight()/2, text);
+            stopThread();
+        }
 
     }
 
