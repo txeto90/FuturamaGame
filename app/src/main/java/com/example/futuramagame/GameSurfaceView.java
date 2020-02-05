@@ -130,12 +130,19 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             paquet.setY(-1);
         }
 
-        text.setTextSize(30);
+        text.setTextSize(50);
         text.setColor(Color.WHITE);
         text.setStyle(Paint.Style.FILL);
-        canvas.drawText("Puntuacio: "+punts, 50, getHeight()-50, text);
+        if(punts < 100){
+            canvas.drawText("Puntuació: "+punts, 50, getHeight()-50, text);
+        }else{
+            text.setTextSize(120);
+            canvas.drawText("YOU WIN!", getWidth()/3, getHeight()/2, text);
+            stopThread();
+        }
 
-        System.out.println(punts);
+
+
 
     }
 
@@ -195,7 +202,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private class MyAnimationThread extends Thread {
         private SurfaceHolder surfaceHolder;
-        public boolean stop = false;
+        private boolean stop = false;
         //CONSTRUCTOR
         public MyAnimationThread(SurfaceHolder surfaceHolder) {
             this.surfaceHolder = surfaceHolder;
