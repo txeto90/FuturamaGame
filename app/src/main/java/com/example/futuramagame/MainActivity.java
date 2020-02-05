@@ -1,5 +1,6 @@
 package com.example.futuramagame;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,8 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 public class MainActivity extends MainMenu {
+
+    private ImageButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +25,15 @@ public class MainActivity extends MainMenu {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        final Context context = this;
+        button = (ImageButton) findViewById(R.id.imageButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GameActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
-    public void gotoGame(){
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-
-    }
-
 }
