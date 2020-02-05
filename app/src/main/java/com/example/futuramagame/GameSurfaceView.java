@@ -4,10 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -75,9 +80,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        stopThread();
     }
 
+    public void stopThread() {
+        if (animationThread != null) animationThread.stop = true;
+    }
+
+    private Paint text = new Paint();
     private int punts = 0;
     private boolean caiguent = false;
     public void newDraw(Canvas canvas){
@@ -85,6 +95,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         Rect rectBackground = new Rect(0,0,getWidth(), getHeight());
         canvas.drawBitmap(fonsBitmap, null, rectBackground,null);
         canvas.drawBitmap(benderResized, bender.getX(), bender.getY(), null);
+        Rect rectBender = new Rect((int)bender.getX(), (int)bender.getY(), (int)bender.getX()+300, (int)bender.getY()+300);
+
+
 
         if(movimentNau()){
             canvas.drawBitmap(nauExpressResizeddret, nauExpress.getX(), nauExpress.getY(), null);
@@ -105,20 +118,41 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }else{
             paquet.setY(paquet.getY() + mov);
             canvas.drawBitmap(paquetResized, paquet.getX(), paquet.getY(), null);
-
             if(paquet.getY() > getHeight()){
                 caiguent = false;
             }
         }
-        if(paquet.equals(bender)){
+        if(paquetAgafat(paquet.getX(), paquet.getY(), rectBender)){
             punts += 10;
-
+            agafat = false;
+            caiguent = false;
+            paquet.setX(-1);
+            paquet.setY(-1);
         }
+
+        text.setTextSize(30);
+        text.setColor(Color.WHITE);
+        text.setStyle(Paint.Style.FILL);
+        canvas.drawText("Puntuacio: "+punts, 50, getHeight()-50, text);
+
         System.out.println(punts);
 
-
-
     }
+
+    private boolean agafat;
+    public boolean paquetAgafat(float px, float py, Rect benderRect){
+
+        if(py > benderRect.top && py < benderRect.bottom){
+            if(px > benderRect.left && px < benderRect.right){
+                agafat = true;
+                return agafat;
+            }
+        }else{
+            agafat = false;
+        }
+        return agafat;
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent ev){
@@ -140,7 +174,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         invalidate();
         return true;
     }
-
 
     private boolean anant;
     public boolean movimentNau(){
